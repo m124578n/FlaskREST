@@ -1,5 +1,5 @@
 from flask import Flask
-from .extensions import db, migrate
+from .extensions import db, migrate, ma
 import os
 
 
@@ -15,7 +15,9 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(pjdir, 'data.sqlite')
 
     db.init_app(app)
+    ma.init_app(app)
     from . import model             # 這個有待研究 如果沒有他 flask db migrate 不到model的table
     migrate.init_app(app, db)
+    
 
     return app
